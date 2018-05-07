@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AuthService } from './auth/auth.service';
+
 
 @Component({
   selector: 'app-root',
@@ -7,4 +11,28 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  isAuthenticated = false;
+
+  constructor(private authService: AuthService,
+              private router: Router) {
+  }
+
+  ngOnInit() {
+    this.authService.authStatusChanged.subscribe(
+      (authenticated) => {
+        this.isAuthenticated = authenticated;
+        if (authenticated) {
+          this.router.navigate(['/home']);
+        } else {
+          this.router.navigate(['/']);
+        }
+      }
+    );
+    this.authService.initAuth();
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
 }
