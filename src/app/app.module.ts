@@ -7,20 +7,23 @@ import { HomeComponent } from './home/home.component';
 import { SigninComponent } from './auth/signin.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './auth/auth.service';
+import { AuthGuardService } from './auth/auth-guard.service';
+import { DebtbalancesComponent } from './debtbalances/debtbalances.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SigninComponent
+    SigninComponent,
+    DebtbalancesComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

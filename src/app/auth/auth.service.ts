@@ -100,32 +100,42 @@ export class AuthService {
     this.getAuthenticatedUser().signOut();
     this.authStatusChanged.next(false);
   }
-  isAuthenticated(): Observable<boolean> {
+
+  /*
+  isAuthenticated() {
     const user = this.getAuthenticatedUser();
-    const obs = Observable.create((observer) => {
-      if (!user) {
-        observer.next(false);
-      } else {
-        user.getSession((err, session) => {
-          if (err) {
-            observer.next(false);
-          } else {
-            if (session.isValid()) {
-              observer.next(true);
-            } else {
-              observer.next(false);
-            }
-          }
-        })
-        observer.next(false);
-      }
-      observer.complete();
-    });
-    return obs;
+    var cognitoUser = userPool.getCurrentUser();
+    if (cognitoUser != null) {
+      cognitoUser.getSession(function(err, session) {
+        if (err) {
+          console.log(err);
+          return false;
+        }
+        console.log(session.isValid() + ' ' + session);
+        return true;
+      });
+    } else {
+      return false;
+    }
+  } */
+  isAuthenticated() {
+    var cognitoUser = userPool.getCurrentUser();
+    if (cognitoUser != null) {
+      console.log('isAuthenticated: ' + cognitoUser.getUsername());
+      cognitoUser.getSession(function(err, session) {
+        if (err) {
+          console.log('isAuthenticated: Error!');
+          return false;
+        } else {
+          console.log('isAuthenticated may be true')
+          return true;
+        }
+      });
+      return true;
+    } else {
+      console.log('Invalid cognitoUser');
+      return false;
+    }
   }
-  initAuth() {
-    this.isAuthenticated().subscribe(
-      (auth) => this.authStatusChanged.next(auth)
-    );
-  }
+
 }

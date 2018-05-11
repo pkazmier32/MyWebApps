@@ -29,7 +29,7 @@ export class AppComponent {
         }
       }
     );
-    this.authService.initAuth();
+   
   }
 
   onLogout() {
