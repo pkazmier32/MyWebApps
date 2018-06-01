@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { DebtBalanceService } from './debtbalances.service';
 
 @Component({
   selector: 'app-debtbalances',
@@ -8,7 +9,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class DebtbalancesComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private dbService: DebtBalanceService) { }
 
   ngOnInit() {
     
